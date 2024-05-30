@@ -1,0 +1,15 @@
+[Nombre='Avion'
+, fechaConstruccion=20/10/2020
+, cantidadPasajeros=200
+, pesoMaximo=900.4
+, disponible=true
+, listaPasajeros=Nombre='Pasajero Actualizado
+', fechaNacimiento=20/10/2000
+, mayorEdad=true
+, numeroTelefono=435774
+, peso=32.0
+, id=1
+)
+
+, id=3
+)]

@@ -1,0 +1,7 @@
+[Nombre='Pasajero Actualizado
+', fechaNacimiento=20/10/2000
+, mayorEdad=true
+, numeroTelefono=435774
+, peso=32.0
+, id=1
+)]
