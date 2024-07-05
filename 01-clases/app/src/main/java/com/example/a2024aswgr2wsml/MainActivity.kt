@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
             texto,
             Snackbar.LENGTH_INDEFINITE
         )
+        snack.show()
     }
 
     val callbackContenidoIntentExplicito = registerForActivityResult(

@@ -17,5 +17,13 @@ class BBaseDatosMemoria {
                     BEntrenador(3, "Carolina", "c@c.com")
                 )
         }
+
+        fun agregarEntrenador(){
+
+        }
+
+        fun buscarEntrenador(){
+
+        }
     }
 }
