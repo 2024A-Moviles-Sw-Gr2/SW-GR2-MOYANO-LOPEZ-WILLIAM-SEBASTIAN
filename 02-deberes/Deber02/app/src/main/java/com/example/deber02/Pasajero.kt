@@ -5,12 +5,12 @@ import android.os.Parcelable
 import java.util.Date
 
 class Pasajero (
-    var id: Int,
-    var nombre: String,
-    var fechaNacimiento: Date,
-    var primeraClase: Boolean,
-    var numeroTelefono: Int,
-    var peso: Double
+    private var id: Int,
+    private var nombre: String,
+    private var fechaNacimiento: Date,
+    private var primeraClase: Boolean,
+    private var numeroTelefono: Int,
+    private var peso: Double
 ): Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -19,8 +19,7 @@ class Pasajero (
         parcel.readByte() != 0.toByte(),
         parcel.readInt(),
         parcel.readDouble()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)

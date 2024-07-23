@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AgregarAvion">
+
+    <EditText
+        android:id="@+id/input_nombre_avion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:ems="10"
+        android:hint="Nombre"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/input_fechaConstruccion_avion"
+        app:layout_constraintEnd_toEndOf="@+id/input_fechaConstruccion_avion"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/input_fechaConstruccion_avion"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/input_fechaConstruccion_avion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="31dp"
+        android:ems="10"
+        android:hint="Fecha Construccion"
+        android:inputType="date"
+        app:layout_constraintBottom_toTopOf="@+id/input_cantidadPasajeros_avion"
+        app:layout_constraintEnd_toEndOf="@+id/input_cantidadPasajeros_avion"
+        app:layout_constraintStart_toStartOf="@+id/input_cantidadPasajeros_avion" />
+
+    <EditText
+        android:id="@+id/input_cantidadPasajeros_avion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Cantidad Pasajeros"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.443" />
+
+    <EditText
+        android:id="@+id/input_pesoMaximo_avion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="Peso Maximo"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="@+id/input_cantidadPasajeros_avion"
+        app:layout_constraintStart_toStartOf="@+id/input_cantidadPasajeros_avion"
+        app:layout_constraintTop_toBottomOf="@+id/input_cantidadPasajeros_avion" />
+
+    <Spinner
+        android:id="@+id/spinner_disponibilidad_avion"
+        android:layout_width="242dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/input_pesoMaximo_avion"
+        app:layout_constraintStart_toStartOf="@+id/input_pesoMaximo_avion"
+        app:layout_constraintTop_toBottomOf="@+id/input_pesoMaximo_avion"
+        app:layout_constraintVertical_bias="0.052" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar Avion"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.108" />
+
+    <Button
+        android:id="@+id/btn_aceptar_agregar_avion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.844" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

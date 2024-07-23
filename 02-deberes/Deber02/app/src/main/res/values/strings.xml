@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Deber02</string>
+    <string-array name="s_seleccionar_dispnibilidad">
+        <item>Seleeccione una opcion</item>
+        <item>Disponible</item>
+        <item>No disponible</item>
+    </string-array>
 </resources>
