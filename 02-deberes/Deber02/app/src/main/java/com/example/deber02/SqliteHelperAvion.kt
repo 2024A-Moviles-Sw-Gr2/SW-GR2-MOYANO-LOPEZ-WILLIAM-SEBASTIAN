@@ -55,15 +55,22 @@ class SqliteHelperAvion (
         return resultadoGuardar != -1L
     }
 
-    fun obtenerAviones(): MutableList<String> {
-        val listaAviones: MutableList<String> = mutableListOf()
+    fun obtenerAviones(): MutableList<Avion> {
+        val listaAviones: MutableList<Avion> = mutableListOf()
         val baseDatosLectura = readableDatabase
-        val query = "SELECT nombre FROM AVION"
+        val query = "SELECT * FROM AVION"
         val cursor = baseDatosLectura.rawQuery(query, null)
         if (cursor.moveToFirst()) {
             do {
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
                 val nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"))
-                listaAviones.add(nombre)
+                val fechaConstruccion = Date(cursor.getLong(cursor.getColumnIndexOrThrow("fechaConstruccion")))
+                val cantidadPasajeros = cursor.getInt(cursor.getColumnIndexOrThrow("cantidadPasajeros"))
+                val pesoMaximo = cursor.getDouble(cursor.getColumnIndexOrThrow("pesoMaximo"))
+                val disponible = cursor.getInt(cursor.getColumnIndexOrThrow("disponible")) == 1
+
+                val avion = Avion(id, nombre, fechaConstruccion, cantidadPasajeros, pesoMaximo, disponible)
+                listaAviones.add(avion)
             } while (cursor.moveToNext())
         }
         cursor.close()

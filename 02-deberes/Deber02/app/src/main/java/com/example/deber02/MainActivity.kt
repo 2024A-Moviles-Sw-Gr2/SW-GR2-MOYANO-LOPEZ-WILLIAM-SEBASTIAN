@@ -15,8 +15,8 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
     private lateinit var agregarAvionLauncher: ActivityResultLauncher<Intent>
-    private lateinit var adaptador: ArrayAdapter<String>
-    private lateinit var aviones: MutableList<String>
+    private lateinit var adaptador: ArrayAdapter<Avion>
+    private lateinit var aviones: MutableList<Avion>
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,13 +52,10 @@ class MainActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                // Obtener el nombre del avión del Intent
-                val nombre = result.data?.getStringExtra("nombre")
-                if (nombre != null) {
-                    // Agregar el nuevo avión a la lista y actualizar el adaptador
-                    aviones.add(nombre)
-                    adaptador.notifyDataSetChanged()
-                }
+                // Actualizar la lista de aviones
+                aviones.clear()
+                aviones.addAll(BaseDatos.tablaAvion!!.obtenerAviones())
+                adaptador.notifyDataSetChanged()
             }
         }
     }
