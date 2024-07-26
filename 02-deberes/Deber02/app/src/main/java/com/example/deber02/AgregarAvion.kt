@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AgregarAvion : AppCompatActivity() {
+    private var avionId: Int? = null
     @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,13 +31,35 @@ class AgregarAvion : AppCompatActivity() {
             insets
         }
 
+        val nombreEditText = findViewById<EditText>(R.id.input_nombre_avion)
+        val fechaConstruccionEditText = findViewById<EditText>(R.id.input_fechaConstruccion_avion)
+        val cantidadPasajerosEditText = findViewById<EditText>(R.id.input_cantidadPasajeros_avion)
+        val pesoMaximoEditText = findViewById<EditText>(R.id.input_pesoMaximo_avion)
+        val disponibilidadSpinner = findViewById<Spinner>(R.id.spinner_disponibilidad_avion)
         val botonAgregarAvion = findViewById<Button>(R.id.btn_aceptar_agregar_avion)
+
+
+        // Verificar si estamos en modo de edición
+        if (intent.hasExtra("avion")) {
+            val avion = intent.getParcelableExtra<Avion>("avion")
+            avion?.let {
+                avionId = it.id
+                nombreEditText.setText(it.nombre)
+                val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                fechaConstruccionEditText.setText(formatter.format(it.fechaConstruccion))
+                cantidadPasajerosEditText.setText(it.cantidadPasajeros.toString())
+                pesoMaximoEditText.setText(it.pesoMaximo.toString())
+                disponibilidadSpinner.setSelection(if (it.disponible) 1 else 2)
+                botonAgregarAvion.text = "Guardar Cambios"
+            }
+        }
+
         botonAgregarAvion.setOnClickListener {
-            val nombre = findViewById<EditText>(R.id.input_nombre_avion).text.toString()
-            val fechaConstruccionStr = findViewById<EditText>(R.id.input_fechaConstruccion_avion).text.toString()
-            val cantidadPasajerosStr = findViewById<EditText>(R.id.input_cantidadPasajeros_avion).text.toString()
-            val pesoMaximoStr = findViewById<EditText>(R.id.input_pesoMaximo_avion).text.toString()
-            val disponibilidadStr = findViewById<Spinner>(R.id.spinner_disponibilidad_avion).selectedItem.toString()
+            val nombre = nombreEditText.text.toString()
+            val fechaConstruccionStr = fechaConstruccionEditText.text.toString()
+            val cantidadPasajerosStr = cantidadPasajerosEditText.text.toString()
+            val pesoMaximoStr = pesoMaximoEditText.text.toString()
+            val disponibilidadStr = disponibilidadSpinner.selectedItem.toString()
 
             val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
             val fechaConstruccionDate = formatter.parse(fechaConstruccionStr)
@@ -49,22 +72,33 @@ class AgregarAvion : AppCompatActivity() {
                 if (cantidadPasajeros != null && pesoMaximo != null) {
                     val fechaConstruccionSqlDate = Date(fechaConstruccionDate.time)
 
-                    val respuesta = BaseDatos.tablaAvion?.crearAvion(
-                        nombre,
-                        fechaConstruccionSqlDate,
-                        cantidadPasajeros,
-                        pesoMaximo,
-                        disponibilidad
-                    )
+                    val respuesta = if (avionId == null) {
+                        BaseDatos.tablaAvion?.crearAvion(
+                            nombre,
+                            fechaConstruccionSqlDate,
+                            cantidadPasajeros,
+                            pesoMaximo,
+                            disponibilidad
+                        )
+                    } else {
+                        BaseDatos.tablaAvion?.actualizarAvion(
+                            avionId!!,
+                            nombre,
+                            fechaConstruccionSqlDate,
+                            cantidadPasajeros,
+                            pesoMaximo,
+                            disponibilidad
+                        )
+                    }
 
                     if (respuesta == true) {
-                        Toast.makeText(this, "Avión agregado correctamente", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, if (avionId == null) "Avión agregado correctamente" else "Avión actualizado correctamente", Toast.LENGTH_SHORT).show()
                         val intent = Intent()
                         intent.putExtra("nombre", nombre)
                         setResult(RESULT_OK, intent)
                         finish()
                     } else {
-                        Toast.makeText(this, "Error al agregar el avión", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Error al " + if (avionId == null) "agregar" else "actualizar" + " el avión", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Toast.makeText(this, "Datos inválidos", Toast.LENGTH_SHORT).show()
@@ -107,5 +141,7 @@ class AgregarAvion : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
         spinner.setSelection(0)
+
+
     }
 }

@@ -7,12 +7,12 @@ import java.util.Date
 import java.util.Locale
 
 class Avion (
-    private var id: Int,
-    private var nombre: String,
-    private var fechaConstruccion: Date,
-    private var cantidadPasajeros: Int,
-    private var pesoMaximo: Double,
-    private var disponible: Boolean
+    var id: Int,
+    var nombre: String,
+    var fechaConstruccion: Date,
+    var cantidadPasajeros: Int,
+    var pesoMaximo: Double,
+    var disponible: Boolean
 ): Parcelable{
 
     constructor(parcel: Parcel): this(

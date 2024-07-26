@@ -3,9 +3,14 @@ package com.example.deber02
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         listView.adapter = adaptador
         adaptador.notifyDataSetChanged()
 
+        registerForContextMenu(listView)
 
         val botonAgregarAvion = findViewById<Button>(R.id.btn_agregar_avion)
         botonAgregarAvion.setOnClickListener {
@@ -57,6 +63,46 @@ class MainActivity : AppCompatActivity() {
                 aviones.addAll(BaseDatos.tablaAvion!!.obtenerAviones())
                 adaptador.notifyDataSetChanged()
             }
+        }
+
+    }
+
+    var posicionItemSeleccionado = -1
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        var inflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        val info = menuInfo as AdapterView.AdapterContextMenuInfo
+        val posicion = info.position
+        posicionItemSeleccionado = posicion
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.mi_editar_avion -> {
+                val avion = aviones[posicionItemSeleccionado]
+                val intent = Intent(this, AgregarAvion::class.java)
+                intent.putExtra("avion", avion)
+                agregarAvionLauncher.launch(intent)
+                return true
+            }
+            R.id.mi_borrar_avion -> {
+                val avionAEliminar = aviones[posicionItemSeleccionado]
+                val exito = BaseDatos.tablaAvion?.eliminarAvion(avionAEliminar.id)
+                if(exito == true){
+                    aviones.removeAt(posicionItemSeleccionado)
+                    adaptador.notifyDataSetChanged()
+                    Toast.makeText(this, "Avion eliminado", Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(this, "Error al eliminar el avion", Toast.LENGTH_SHORT).show()
+                }
+                return true
+            }
+            else -> super.onContextItemSelected(item)
         }
     }
 

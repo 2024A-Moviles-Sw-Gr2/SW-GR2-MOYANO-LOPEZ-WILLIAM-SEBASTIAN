@@ -77,4 +77,36 @@ class SqliteHelperAvion (
         baseDatosLectura.close()
         return listaAviones
     }
+
+    fun eliminarAvion(id: Int): Boolean {
+        val baseDatosEscritura = writableDatabase
+        val resultado = baseDatosEscritura.delete("AVION", "id=?", arrayOf(id.toString()))
+        baseDatosEscritura.close()
+        return resultado != -1
+    }
+
+    fun actualizarAvion(
+        id: Int,
+        nombre: String,
+        fechaConstruccion: Date,
+        cantidadPasajeros: Int,
+        pesoMaximo: Double,
+        disponible: Boolean
+    ): Boolean {
+        val db = this.writableDatabase
+        val valoresAActualizar = ContentValues()
+        valoresAActualizar.put("nombre", nombre)
+        valoresAActualizar.put("fecha_construccion", fechaConstruccion.time)
+        valoresAActualizar.put("cantidad_pasajeros", cantidadPasajeros)
+        valoresAActualizar.put("peso_maximo", pesoMaximo)
+        valoresAActualizar.put("disponible", if (disponible) 1 else 0)
+        val resultado = db.update(
+            "AVION", // Nombre de la tabla
+            valoresAActualizar, // Valores a actualizar
+            "id=?", // Clausula where
+            arrayOf(id.toString()) // Parametros de la clausula where
+        )
+        db.close()
+        return resultado > 0
+    }
 }
