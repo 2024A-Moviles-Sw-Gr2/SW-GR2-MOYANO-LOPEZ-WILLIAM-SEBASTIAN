@@ -124,6 +124,11 @@ class MainActivity : AppCompatActivity() {
         botonRView.setOnClickListener {
             irActividad(FRecyclerView::class.java)
         }
+
+        val botonFirebaseUI = findViewById<Button>(R.id.btn_intent_firebase_ui)
+        botonFirebaseUI.setOnClickListener {
+            irActividad(HFirebaseUIAuth::class.java)
+        }
     }
 
     fun irActividad(clase: Class<*>) {
