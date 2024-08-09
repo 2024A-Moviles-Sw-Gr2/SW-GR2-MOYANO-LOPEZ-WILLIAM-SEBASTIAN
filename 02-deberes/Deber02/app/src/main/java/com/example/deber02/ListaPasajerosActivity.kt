@@ -1,6 +1,5 @@
 package com.example.deber02
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.ContextMenu
@@ -18,58 +17,50 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var agregarAvionLauncher: ActivityResultLauncher<Intent>
-    private lateinit var verPasajerosLauncher: ActivityResultLauncher<Intent>
-    private lateinit var adaptador: ArrayAdapter<Avion>
-    private lateinit var aviones: MutableList<Avion>
-    @SuppressLint("MissingInflatedId")
+class ListaPasajerosActivity : AppCompatActivity() {
+    private lateinit var pasajeros: MutableList<Pasajero>
+    private lateinit var adaptador: ArrayAdapter<Pasajero>
+    private lateinit var agregarPasajeroLauncher: ActivityResultLauncher<Intent>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_lista_pasajeros)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        //Inicializar base de datos
+        val idAvion = intent.getIntExtra("idAvion", -1)
         BaseDatos.tabla = SqliteHelper(this)
-        val listView = findViewById<ListView>(R.id.lv_lista_aviones)
-        aviones = BaseDatos.tabla!!.obtenerAviones()
+        val listView = findViewById<ListView>(R.id.lv_lista_pasajeros)
+        pasajeros = BaseDatos.tabla!!.obtenerPasajerosPorAvion(idAvion)
 
         adaptador = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
-            aviones
+            pasajeros
         )
+
         listView.adapter = adaptador
         adaptador.notifyDataSetChanged()
 
         registerForContextMenu(listView)
 
-        val botonAgregarAvion = findViewById<Button>(R.id.btn_agregar_avion)
-        botonAgregarAvion.setOnClickListener {
-            irActividad(AgregarActualizarAvionActivity::class.java)
+        val botonAgregarPasajero = findViewById<Button>(R.id.btn_agregar_pasajero)
+        botonAgregarPasajero.setOnClickListener {
+            irActividad(AgregarActualizarPasajeroActivity::class.java)
         }
 
-        // Registrar el lanzador para obtener el resultado
-        agregarAvionLauncher = registerForActivityResult(
+        agregarPasajeroLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
                 // Actualizar la lista de aviones
-                aviones.clear()
-                aviones.addAll(BaseDatos.tabla!!.obtenerAviones())
+                pasajeros.clear()
+                pasajeros.addAll(BaseDatos.tabla!!.obtenerPasajeros())
                 adaptador.notifyDataSetChanged()
             }
-        }
-
-        verPasajerosLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            // Aquí podrías manejar el resultado si es necesario
         }
 
     }
@@ -82,7 +73,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onCreateContextMenu(menu, v, menuInfo)
         var inflater = menuInflater
-        inflater.inflate(R.menu.menu, menu)
+        inflater.inflate(R.menu.menu_pasajero, menu)
         val info = menuInfo as AdapterView.AdapterContextMenuInfo
         val posicion = info.position
         posicionItemSeleccionado = posicion
@@ -90,31 +81,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
-            R.id.mi_editar_avion -> {
-                val avion = aviones[posicionItemSeleccionado]
-                val intent = Intent(this, AgregarActualizarAvionActivity::class.java)
-                intent.putExtra("avion", avion)
-                agregarAvionLauncher.launch(intent)
+            R.id.mi_editar_pasajero -> {
+                val pasajero = pasajeros[posicionItemSeleccionado]
+                val intent = Intent(this, AgregarActualizarPasajeroActivity::class.java)
+                intent.putExtra("avion", pasajero)
+                agregarPasajeroLauncher.launch(intent)
                 return true
             }
-            R.id.mi_borrar_avion -> {
-                val avionAEliminar = aviones[posicionItemSeleccionado]
-                val exito = BaseDatos.tabla?.eliminarAvion(avionAEliminar.id)
+            R.id.mi_borrar_pasajero -> {
+                val pasajeroAEliminar = pasajeros[posicionItemSeleccionado]
+                val exito = BaseDatos.tabla?.eliminarPasajero(pasajeroAEliminar.id)
                 if(exito == true){
-                    aviones.removeAt(posicionItemSeleccionado)
+                    pasajeros.removeAt(posicionItemSeleccionado)
                     adaptador.notifyDataSetChanged()
-                    Toast.makeText(this, "Avion eliminado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Pasajero eliminado", Toast.LENGTH_SHORT).show()
                 }else{
-                    Toast.makeText(this, "Error al eliminar el avion", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error al eliminar el pasajero", Toast.LENGTH_SHORT).show()
                 }
                 return true
-            }
-            R.id.mi_ver_pasajeros -> {
-                val avion = aviones[posicionItemSeleccionado]
-                val intent = Intent(this, ListaPasajerosActivity::class.java)
-                intent.putExtra("idAvion", avion.id)
-                verPasajerosLauncher.launch(intent)
-                true
             }
             else -> super.onContextItemSelected(item)
         }
@@ -122,6 +106,6 @@ class MainActivity : AppCompatActivity() {
 
     fun irActividad(clase: Class<*>) {
         val intent = Intent(this, clase)
-        agregarAvionLauncher.launch(intent)
+        agregarPasajeroLauncher.launch(intent)
     }
 }

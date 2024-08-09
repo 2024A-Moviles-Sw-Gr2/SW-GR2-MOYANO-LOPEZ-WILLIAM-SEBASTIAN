@@ -13,7 +13,13 @@
         android:theme="@style/Theme.Deber02"
         tools:targetApi="31">
         <activity
-            android:name=".AgregarAvion"
+            android:name=".AgregarActualizarPasajeroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListaPasajerosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AgregarActualizarAvionActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

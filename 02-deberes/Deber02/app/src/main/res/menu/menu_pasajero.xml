@@ -3,12 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/mi_editar_avion"
+        android:id="@+id/mi_editar_pasajero"
         android:title="Editar" />
     <item
-        android:id="@+id/mi_borrar_avion"
+        android:id="@+id/mi_borrar_pasajero"
         android:title="Borrar" />
-    <item
-        android:id="@+id/mi_ver_pasajeros"
-        android:title="Ver pasajeros" />
 </menu>

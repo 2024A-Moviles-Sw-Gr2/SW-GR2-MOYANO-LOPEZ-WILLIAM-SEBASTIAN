@@ -18,7 +18,7 @@ import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class AgregarAvion : AppCompatActivity() {
+class AgregarActualizarAvionActivity : AppCompatActivity() {
     private var avionId: Int? = null
     @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +73,7 @@ class AgregarAvion : AppCompatActivity() {
                     val fechaConstruccionSqlDate = Date(fechaConstruccionDate.time)
 
                     val respuesta = if (avionId == null) {
-                        BaseDatos.tablaAvion?.crearAvion(
+                        BaseDatos.tabla?.crearAvion(
                             nombre,
                             fechaConstruccionSqlDate,
                             cantidadPasajeros,
@@ -81,7 +81,7 @@ class AgregarAvion : AppCompatActivity() {
                             disponibilidad
                         )
                     } else {
-                        BaseDatos.tablaAvion?.actualizarAvion(
+                        BaseDatos.tabla?.actualizarAvion(
                             avionId!!,
                             nombre,
                             fechaConstruccionSqlDate,
@@ -122,7 +122,7 @@ class AgregarAvion : AppCompatActivity() {
                 if (position == 0) {
                     textView.setTextColor(android.graphics.Color.GRAY)
                 } else {
-                    textView.setTextColor(android.graphics.Color.BLACK)
+                    textView.setTextColor(android.graphics.Color.WHITE)
                 }
                 return view
             }
@@ -134,7 +134,7 @@ class AgregarAvion : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 if (position != 0) {
                     val selectedItem = parent.getItemAtPosition(position).toString()
-                    Toast.makeText(this@AgregarAvion, "Seleccionado: $selectedItem", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AgregarActualizarAvionActivity, "Seleccionado: $selectedItem", Toast.LENGTH_SHORT).show()
                 }
             }
 
