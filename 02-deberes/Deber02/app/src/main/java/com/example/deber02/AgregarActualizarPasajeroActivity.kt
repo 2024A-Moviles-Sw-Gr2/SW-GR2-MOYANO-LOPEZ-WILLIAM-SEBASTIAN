@@ -29,6 +29,8 @@ class AgregarActualizarPasajeroActivity : AppCompatActivity() {
             insets
         }
 
+        val idAvion = intent.getIntExtra("idAvion", -1)
+
         val nombreEditText = findViewById<EditText>(R.id.input_nombre_pasajero)
         val fechaNacimientoEditText = findViewById<EditText>(R.id.input_fecha_nacimiento_pasajero)
         val numeroTelefonoEditText = findViewById<EditText>(R.id.input_numero_telefono_pasajero)
@@ -75,7 +77,8 @@ class AgregarActualizarPasajeroActivity : AppCompatActivity() {
                             fechaNacimientoSqlDate,
                             numeroTelefono,
                             peso,
-                            discapacidad
+                            discapacidad,
+                            idAvion
                         )
                     } else {
                         BaseDatos.tabla?.actualizarPasajero(

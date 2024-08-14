@@ -141,7 +141,8 @@ class SqliteHelper (
         fechaNacimiento: Date,
         numeroTelefono: Int,
         peso: Double,
-        discapacidad: Boolean
+        discapacidad: Boolean,
+        idAvion: Int
     ): Boolean{
         val baseDatoEscritura = writableDatabase
         val valoresAGuardar = ContentValues()
@@ -150,6 +151,7 @@ class SqliteHelper (
         valoresAGuardar.put("numeroTelefono", numeroTelefono)
         valoresAGuardar.put("peso", peso)
         valoresAGuardar.put("discapacidad", if (discapacidad) 1 else 0)
+        valoresAGuardar.put("idAvion", idAvion)
 
         Log.d("SqliteHelperPasajero", "Insertando pasajero: $valoresAGuardar")
         val resultadoGuardar = baseDatoEscritura.insert("PASAJERO", null, valoresAGuardar)
@@ -217,6 +219,7 @@ class SqliteHelper (
         val baseDatosLectura = readableDatabase
         val query = "SELECT * FROM PASAJERO WHERE idAvion = ?"
         val cursor = baseDatosLectura.rawQuery(query, arrayOf(idAvion.toString()))
+
         if (cursor.moveToFirst()) {
             do {
                 val id = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
@@ -229,10 +232,14 @@ class SqliteHelper (
                 val pasajero = Pasajero(id, nombre, fechaNacimiento, numeroTelefono, peso, disponible)
                 listaPasajeros.add(pasajero)
             } while (cursor.moveToNext())
+        } else {
+            Log.d("SqliteHelper", "No se encontraron pasajeros con idAvion = $idAvion")
         }
+
         cursor.close()
         baseDatosLectura.close()
         return listaPasajeros
     }
+
 
 }

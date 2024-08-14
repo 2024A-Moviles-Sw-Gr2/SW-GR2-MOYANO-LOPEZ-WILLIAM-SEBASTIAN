@@ -49,8 +49,12 @@ class ListaPasajerosActivity : AppCompatActivity() {
 
         val botonAgregarPasajero = findViewById<Button>(R.id.btn_agregar_pasajero)
         botonAgregarPasajero.setOnClickListener {
-            irActividad(AgregarActualizarPasajeroActivity::class.java)
+            val intent = Intent(this, AgregarActualizarPasajeroActivity::class.java)
+            intent.putExtra("idAvion", idAvion)
+            agregarPasajeroLauncher.launch(intent)
+            true
         }
+
 
         agregarPasajeroLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -58,7 +62,7 @@ class ListaPasajerosActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 // Actualizar la lista de aviones
                 pasajeros.clear()
-                pasajeros.addAll(BaseDatos.tabla!!.obtenerPasajeros())
+                pasajeros.addAll(BaseDatos.tabla!!.obtenerPasajerosPorAvion(idAvion))
                 adaptador.notifyDataSetChanged()
             }
         }
@@ -84,7 +88,7 @@ class ListaPasajerosActivity : AppCompatActivity() {
             R.id.mi_editar_pasajero -> {
                 val pasajero = pasajeros[posicionItemSeleccionado]
                 val intent = Intent(this, AgregarActualizarPasajeroActivity::class.java)
-                intent.putExtra("avion", pasajero)
+                intent.putExtra("pasajero", pasajero)
                 agregarPasajeroLauncher.launch(intent)
                 return true
             }

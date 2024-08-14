@@ -12,7 +12,7 @@ class Pasajero (
     var fechaNacimiento: Date,
     var numeroTelefono: Int,
     var peso: Double,
-    var discapacidad: Boolean
+    var discapacidad: Boolean,
 ): Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -20,7 +20,7 @@ class Pasajero (
         Date(parcel.readLong()),
         parcel.readInt(),
         parcel.readDouble(),
-        parcel.readByte() != 0.toByte()
+        parcel.readByte() != 0.toByte(),
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
