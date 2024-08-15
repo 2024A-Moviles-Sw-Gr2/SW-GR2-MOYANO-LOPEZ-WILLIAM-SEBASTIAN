@@ -21,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat
 class MainActivity : AppCompatActivity() {
     private lateinit var agregarAvionLauncher: ActivityResultLauncher<Intent>
     private lateinit var verPasajerosLauncher: ActivityResultLauncher<Intent>
+    private lateinit var verUbicacion: ActivityResultLauncher<Intent>
     private lateinit var adaptador: ArrayAdapter<Avion>
     private lateinit var aviones: MutableList<Avion>
     @SuppressLint("MissingInflatedId")
@@ -72,6 +73,12 @@ class MainActivity : AppCompatActivity() {
             // Aquí podrías manejar el resultado si es necesario
         }
 
+        verUbicacion = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+
+        }
+
     }
 
     var posicionItemSeleccionado = -1
@@ -114,6 +121,13 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, ListaPasajerosActivity::class.java)
                 intent.putExtra("idAvion", avion.id)
                 verPasajerosLauncher.launch(intent)
+                true
+            }
+            R.id.mi_ver_ubicacion -> {
+                val avion = aviones[posicionItemSeleccionado]
+                val intent = Intent(this, GoogleMapsActivity::class.java)
+                intent.putExtra("avion", avion)
+                verUbicacion.launch(intent)
                 true
             }
             else -> super.onContextItemSelected(item)

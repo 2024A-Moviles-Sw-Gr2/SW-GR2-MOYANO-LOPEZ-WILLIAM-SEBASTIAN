@@ -11,4 +11,7 @@
     <item
         android:id="@+id/mi_ver_pasajeros"
         android:title="Ver pasajeros" />
+    <item
+        android:id="@+id/mi_ver_ubicacion"
+        android:title="Ver ubicacion" />
 </menu>

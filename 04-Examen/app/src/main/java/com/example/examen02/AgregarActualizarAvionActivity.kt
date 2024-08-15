@@ -36,6 +36,8 @@ class AgregarActualizarAvionActivity : AppCompatActivity() {
         val cantidadPasajerosEditText = findViewById<EditText>(R.id.input_cantidadPasajeros_avion)
         val pesoMaximoEditText = findViewById<EditText>(R.id.input_pesoMaximo_avion)
         val disponibilidadSpinner = findViewById<Spinner>(R.id.spinner_disponibilidad_avion)
+        val latitudEditText = findViewById<EditText>(R.id.input_latitud)
+        val longitudEditText = findViewById<EditText>(R.id.input_longitud)
         val botonAgregarAvion = findViewById<Button>(R.id.btn_aceptar_agregar_avion)
 
 
@@ -50,6 +52,8 @@ class AgregarActualizarAvionActivity : AppCompatActivity() {
                 cantidadPasajerosEditText.setText(it.cantidadPasajeros.toString())
                 pesoMaximoEditText.setText(it.pesoMaximo.toString())
                 disponibilidadSpinner.setSelection(if (it.disponible) 1 else 2)
+                latitudEditText.setText(it.latitud.toString())
+                longitudEditText.setText(it.longitud.toString())
                 botonAgregarAvion.text = "Guardar Cambios"
             }
         }
@@ -60,14 +64,18 @@ class AgregarActualizarAvionActivity : AppCompatActivity() {
             val cantidadPasajerosStr = cantidadPasajerosEditText.text.toString()
             val pesoMaximoStr = pesoMaximoEditText.text.toString()
             val disponibilidadStr = disponibilidadSpinner.selectedItem.toString()
+            val latitudStr = latitudEditText.text.toString()
+            val longitudStr = longitudEditText.text.toString()
 
             val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
             val fechaConstruccionDate = formatter.parse(fechaConstruccionStr)
 
-            if (nombre.isNotEmpty() && fechaConstruccionDate != null && cantidadPasajerosStr.isNotEmpty() && pesoMaximoStr.isNotEmpty()) {
+            if (nombre.isNotEmpty() && fechaConstruccionDate != null && cantidadPasajerosStr.isNotEmpty() && pesoMaximoStr.isNotEmpty() && latitudStr.isNotEmpty() && longitudStr.isNotEmpty()) {
                 val cantidadPasajeros = cantidadPasajerosStr.toIntOrNull()
                 val pesoMaximo = pesoMaximoStr.toDoubleOrNull()
                 val disponibilidad = disponibilidadStr == "Disponible"
+                val latitud = latitudStr.toDoubleOrNull() ?: 0.0
+                val longitud = longitudStr.toDoubleOrNull() ?: 0.0
 
                 if (cantidadPasajeros != null && pesoMaximo != null) {
                     val fechaConstruccionSqlDate = Date(fechaConstruccionDate.time)
@@ -78,7 +86,9 @@ class AgregarActualizarAvionActivity : AppCompatActivity() {
                             fechaConstruccionSqlDate,
                             cantidadPasajeros,
                             pesoMaximo,
-                            disponibilidad
+                            disponibilidad,
+                            latitud,
+                            longitud
                         )
                     } else {
                         BaseDatos.tabla?.actualizarAvion(
@@ -87,7 +97,9 @@ class AgregarActualizarAvionActivity : AppCompatActivity() {
                             fechaConstruccionSqlDate,
                             cantidadPasajeros,
                             pesoMaximo,
-                            disponibilidad
+                            disponibilidad,
+                            latitud,
+                            longitud
                         )
                     }
 

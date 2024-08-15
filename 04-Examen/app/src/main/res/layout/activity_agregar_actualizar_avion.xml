@@ -11,27 +11,26 @@
         android:id="@+id/input_nombre_avion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="28dp"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/input_fechaConstruccion_avion"
         app:layout_constraintEnd_toEndOf="@+id/input_fechaConstruccion_avion"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/input_fechaConstruccion_avion"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="@+id/input_fechaConstruccion_avion" />
 
     <EditText
         android:id="@+id/input_fechaConstruccion_avion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="31dp"
+        android:layout_marginBottom="28dp"
         android:ems="10"
         android:hint="Fecha Construccion"
         android:inputType="date"
         app:layout_constraintBottom_toTopOf="@+id/input_cantidadPasajeros_avion"
         app:layout_constraintEnd_toEndOf="@+id/input_cantidadPasajeros_avion"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/input_cantidadPasajeros_avion" />
 
     <EditText
@@ -46,7 +45,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.443" />
+        app:layout_constraintVertical_bias="0.364" />
 
     <EditText
         android:id="@+id/input_pesoMaximo_avion"
@@ -69,7 +68,7 @@
         app:layout_constraintEnd_toEndOf="@+id/input_pesoMaximo_avion"
         app:layout_constraintStart_toStartOf="@+id/input_pesoMaximo_avion"
         app:layout_constraintTop_toBottomOf="@+id/input_pesoMaximo_avion"
-        app:layout_constraintVertical_bias="0.052" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView"
@@ -79,10 +78,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.108" />
+        app:layout_constraintVertical_bias="0.066" />
 
     <Button
         android:id="@+id/btn_aceptar_agregar_avion"
@@ -93,6 +92,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.844" />
+        app:layout_constraintVertical_bias="0.92" />
+
+    <EditText
+        android:id="@+id/input_latitud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="Latitud"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_disponibilidad_avion"
+        app:layout_constraintStart_toStartOf="@+id/spinner_disponibilidad_avion"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_disponibilidad_avion" />
+
+    <EditText
+        android:id="@+id/input_longitud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="Longitud"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@+id/input_latitud"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/input_latitud"
+        app:layout_constraintTop_toBottomOf="@+id/input_latitud" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

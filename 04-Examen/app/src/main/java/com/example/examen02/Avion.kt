@@ -12,7 +12,9 @@ class Avion (
     var fechaConstruccion: Date,
     var cantidadPasajeros: Int,
     var pesoMaximo: Double,
-    var disponible: Boolean
+    var disponible: Boolean,
+    var latitud: Double,
+    var longitud: Double
 ): Parcelable{
 
     constructor(parcel: Parcel): this(
@@ -21,7 +23,9 @@ class Avion (
         Date(parcel.readLong()),
         parcel.readInt(),
         parcel.readDouble(),
-        parcel.readByte() != 0.toByte()
+        parcel.readByte() != 0.toByte(),
+        parcel.readDouble(),
+        parcel.readDouble()
     )
 
 
@@ -36,6 +40,8 @@ class Avion (
         parcel.writeInt(cantidadPasajeros)
         parcel.writeDouble(pesoMaximo)
         parcel.writeByte(if (disponible) 1 else 0)
+        parcel.writeDouble(latitud)
+        parcel.writeDouble(longitud)
     }
 
     override fun toString(): String {
@@ -45,7 +51,9 @@ class Avion (
                 "Fecha Construccion: $fechaFormateada\n" +
                 "Cantidad Pasajeros: $cantidadPasajeros\n" +
                 "Peso Maximo: $pesoMaximo\n" +
-                "Disponible: $disponible"
+                "Disponible: $disponible\n" +
+                "Latitud: $latitud\n" +
+                "Longitud: $longitud\n"
     }
     companion object CREATOR : Parcelable.Creator<Avion> {
         override fun createFromParcel(parcel: Parcel): Avion {

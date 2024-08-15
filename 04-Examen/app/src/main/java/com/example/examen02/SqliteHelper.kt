@@ -13,7 +13,7 @@ class SqliteHelper (
     contexto,
     "examen_moviles",
     null,
-    1
+    2
 ) {
     override fun onCreate(db: SQLiteDatabase?) {
         val scriptSQLCrearTablaAvion =
@@ -24,7 +24,9 @@ class SqliteHelper (
                     fechaConstruccion DATE,
                     cantidadPasajeros INTEGER,
                     pesoMaximo DOUBLE,
-                    disponible BOOLEAN
+                    disponible BOOLEAN,
+                    latitud DOUBLE,
+                    longitud DOUBLE
                 )
             """.trimIndent()
 
@@ -65,7 +67,9 @@ class SqliteHelper (
         fechaConstruccion: Date,
         cantidadPasajeros: Int,
         pesoMaximo: Double,
-        disponible: Boolean
+        disponible: Boolean,
+        latitud: Double,
+        longitud: Double
     ): Boolean {
         val baseDatosEscritura = writableDatabase
         val valoresAGuardar = ContentValues()
@@ -74,6 +78,8 @@ class SqliteHelper (
         valoresAGuardar.put("cantidadPasajeros", cantidadPasajeros)
         valoresAGuardar.put("pesoMaximo", pesoMaximo)
         valoresAGuardar.put("disponible", if (disponible) 1 else 0)
+        valoresAGuardar.put("latitud", latitud)
+        valoresAGuardar.put("longitud", longitud)
 
         Log.d("SqliteHelperAvion", "Insertando avión: $valoresAGuardar")
         val resultadoGuardar = baseDatosEscritura.insert("AVION", null, valoresAGuardar)
@@ -94,8 +100,10 @@ class SqliteHelper (
                 val cantidadPasajeros = cursor.getInt(cursor.getColumnIndexOrThrow("cantidadPasajeros"))
                 val pesoMaximo = cursor.getDouble(cursor.getColumnIndexOrThrow("pesoMaximo"))
                 val disponible = cursor.getInt(cursor.getColumnIndexOrThrow("disponible")) == 1
+                val latitud = cursor.getDouble(cursor.getColumnIndexOrThrow("latitud"))
+                val longitud = cursor.getDouble(cursor.getColumnIndexOrThrow("longitud"))
 
-                val avion = Avion(id, nombre, fechaConstruccion, cantidadPasajeros, pesoMaximo, disponible)
+                val avion = Avion(id, nombre, fechaConstruccion, cantidadPasajeros, pesoMaximo, disponible, latitud, longitud)
                 listaAviones.add(avion)
             } while (cursor.moveToNext())
         }
@@ -117,7 +125,9 @@ class SqliteHelper (
         fechaConstruccion: Date,
         cantidadPasajeros: Int,
         pesoMaximo: Double,
-        disponible: Boolean
+        disponible: Boolean,
+        latitud: Double,
+        longitud: Double
     ): Boolean {
         val db = this.writableDatabase
         val valoresAActualizar = ContentValues()
@@ -126,6 +136,8 @@ class SqliteHelper (
         valoresAActualizar.put("cantidadPasajeros", cantidadPasajeros)
         valoresAActualizar.put("pesoMaximo", pesoMaximo)
         valoresAActualizar.put("disponible", if (disponible) 1 else 0)
+        valoresAActualizar.put("latitud", latitud)
+        valoresAActualizar.put("longitud", longitud)
         val resultado = db.update(
             "AVION", // Nombre de la tabla
             valoresAActualizar, // Valores a actualizar

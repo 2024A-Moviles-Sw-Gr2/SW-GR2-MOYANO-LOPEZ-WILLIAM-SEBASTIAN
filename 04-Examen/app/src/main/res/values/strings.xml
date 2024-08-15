@@ -11,4 +11,5 @@
         <item>Discapacidad</item>
         <item>Sin discapacidad</item>
     </string-array>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
