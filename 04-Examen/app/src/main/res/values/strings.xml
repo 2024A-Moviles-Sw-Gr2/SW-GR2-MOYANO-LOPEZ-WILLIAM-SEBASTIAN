@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Examen02</string>
+    <string-array name="s_seleccionar_dispnibilidad">
+        <item>Seleccione una opcion</item>
+        <item>Disponible</item>
+        <item>No disponible</item>
+    </string-array>
+
+    <string-array name="s_seleccionar_discapacidad">
+        <item>Seleccione una opcion</item>
+        <item>Discapacidad</item>
+        <item>Sin discapacidad</item>
+    </string-array>
+</resources>
