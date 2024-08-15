@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_home"
+        android:icon="@drawable/casa"
+        android:title="Principal"
+        android:checkable="false" />
+
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/notificaciones"
+        android:title="Notificaciones"
+        android:checkable="false" />
+
+    <item
+        android:id="@+id/menu_notifications"
+        android:icon="@drawable/explorar"
+        android:title="Explorar"
+        android:checkable="false" />
+
+    <item
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/usuario"
+        android:title="Perfil"
+        android:checkable="false" />
+
+</menu>
